@@ -33,7 +33,7 @@ val MainAppModule = module{
 /**
  * ViewModels module
  */
-val viewModelsModule = module {
+val ViewModelsModule = module {
     //Provides an instance of ViewModel and binds it to an Android Component lifecycle
     viewModel { FooViewModel(get()) }
     viewModel { SharedPreferencesViewModel(get()) }
@@ -43,7 +43,7 @@ val viewModelsModule = module {
 /**
  * Module list
  */
-val appModules = listOf(MainAppModule)
+val appModules = listOf(MainAppModule, ViewModelsModule)
 
 object Properties {
     const val SHARED_PREFERENCES = "Shared Preferences"
