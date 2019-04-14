@@ -2,7 +2,7 @@ package com.base.application.kotlin.model.repositories
 
 import android.content.SharedPreferences
 
-class SharedPrefs(private val sharedPreferences: SharedPreferences) {
+class SharedPreferencesRepository(private val sharedPreferences: SharedPreferences) {
 
     fun getString() : String? {
         return sharedPreferences.getString(THIS_STRING_PREFS, "")

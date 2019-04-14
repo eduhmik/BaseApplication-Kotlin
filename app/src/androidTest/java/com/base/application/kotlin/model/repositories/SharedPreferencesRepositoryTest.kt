@@ -16,7 +16,7 @@ import org.mockito.MockitoAnnotations.initMocks
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class SharedPrefsTest {
+class SharedPreferencesRepositoryTest {
 
     @Mock
     private val mockSharedPreferences: SharedPreferences? = null
@@ -24,12 +24,12 @@ class SharedPrefsTest {
     @Mock
     private val mockSharedPreferencesEditor: SharedPreferences.Editor? = null
 
-    private var sharedPrefsUnderTest: SharedPrefs? = null
+    private var sharedPreferencesRepositoryUnderTest: SharedPreferencesRepository? = null
 
     @Before
     fun setUp() {
         initMocks(this)
-        sharedPrefsUnderTest = SharedPrefs(mockSharedPreferences!!)
+        sharedPreferencesRepositoryUnderTest = SharedPreferencesRepository(mockSharedPreferences!!)
     }
 
     @Test
@@ -39,7 +39,7 @@ class SharedPrefsTest {
         `when`(mockSharedPreferences!!.getString(anyString(), anyString())).thenReturn("Test")
 
         // Run the test
-        val result = sharedPrefsUnderTest!!.getString()
+        val result = sharedPreferencesRepositoryUnderTest!!.getString()
 
         // Verify the results
         assertEquals(expectedResult, result)
@@ -55,7 +55,7 @@ class SharedPrefsTest {
         `when`(mockSharedPreferencesEditor.commit()).thenReturn(true)
 
         // Run the test
-        val result = sharedPrefsUnderTest!!.saveString("")
+        val result = sharedPreferencesRepositoryUnderTest!!.saveString("")
 
         // Verify the results
         assertTrue(result)
@@ -70,7 +70,7 @@ class SharedPrefsTest {
         `when`(mockSharedPreferencesEditor.commit()).thenReturn(true)
 
         // Run the test
-        val result = sharedPrefsUnderTest!!.clear()
+        val result = sharedPreferencesRepositoryUnderTest!!.clear()
 
         // Verify the results
         assertTrue(result)

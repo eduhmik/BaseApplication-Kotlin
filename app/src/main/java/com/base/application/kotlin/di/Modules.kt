@@ -3,7 +3,7 @@ package com.base.application.kotlin.di
 import android.content.Context
 import android.content.SharedPreferences
 import com.base.application.kotlin.di.Properties.SHARED_PREFERENCES
-import com.base.application.kotlin.model.repositories.SharedPrefs
+import com.base.application.kotlin.model.repositories.SharedPreferencesRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -12,7 +12,7 @@ import org.koin.dsl.module
  */
 val MainAppModule = module{
     factory<SharedPreferences>{ androidContext().getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE)}
-    single { SharedPrefs(get()) }
+    single { SharedPreferencesRepository(get()) }
 }
 
 
