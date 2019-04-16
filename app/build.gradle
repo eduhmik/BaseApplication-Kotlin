@@ -66,4 +66,10 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:$room_version"
     implementation "android.arch.persistence.room:rxjava2:$room_version"
     testImplementation "android.arch.persistence.room:testing:$room_version"
+
+
+    // Networking
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 }
