@@ -1,19 +1,8 @@
 package com.base.application.kotlin.model.data
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+data class FooResponse(val data: List<Foo>): BaseApiResponse()
 
-
-class FooResponse {
-
-    @SerializedName("status")
-    @Expose
-    var status: Boolean? = null
-    @SerializedName("message")
-    @Expose
+abstract class BaseApiResponse {
+    var status: Int = 0
     var message: String? = null
-    @SerializedName("data")
-    @Expose
-    var foos: List<Foo>? = null
-
 }

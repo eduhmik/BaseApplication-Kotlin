@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.base.application.kotlin.di.Properties.ROOM_DB_NAME
 import com.base.application.kotlin.di.Properties.SHARED_PREFERENCES
-import com.base.application.kotlin.model.repositories.FooRepository
+import com.base.application.kotlin.model.repositories.FooRoomRepository
 import com.base.application.kotlin.model.repositories.SharedPreferencesRepository
 import com.base.application.kotlin.model.room.AppDatabase
 import com.base.application.kotlin.viewmodel.FooViewModel
@@ -26,8 +26,8 @@ val MainAppModule = module{
     single{Room.databaseBuilder(androidApplication(), AppDatabase::class.java, ROOM_DB_NAME).build()}
     // FooDAO instance (get instance from AppDatabase)
     single { get<AppDatabase>().fooDao() }
-    // FooRepository instance
-    single { FooRepository(get()) }
+    // FooRoomRepository instance
+    single { FooRoomRepository(get()) }
 }
 
 /**

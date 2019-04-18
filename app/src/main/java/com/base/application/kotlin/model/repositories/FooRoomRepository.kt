@@ -5,7 +5,7 @@ import android.os.AsyncTask
 import com.base.application.kotlin.model.data.Foo
 import com.base.application.kotlin.model.room.FooDao
 
-class FooRepository(var fooDao : FooDao) {
+class FooRoomRepository(var fooDao : FooDao) {
 
     fun getAllFoos(): LiveData<List<Foo>>{
         return fooDao.foos
