@@ -7,7 +7,7 @@ import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.MutableLiveData
 
 
-class FooViewModel(var fooRoomRepository: FooRoomRepository)  : ViewModel(){
+class FooRoomViewModel(var fooRoomRepository: FooRoomRepository)  : ViewModel(){
 
     private val searchId = MutableLiveData<Long>()
     var searchedFoos = Transformations.switchMap(searchId) { c -> fooRoomRepository.findFooById(c) }

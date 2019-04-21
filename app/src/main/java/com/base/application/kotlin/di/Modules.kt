@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.base.application.kotlin.di.Properties.ROOM_DB_NAME
 import com.base.application.kotlin.di.Properties.SHARED_PREFERENCES
+import com.base.application.kotlin.model.repositories.FooRestRepository
 import com.base.application.kotlin.model.repositories.FooRoomRepository
 import com.base.application.kotlin.model.repositories.SharedPreferencesRepository
 import com.base.application.kotlin.model.room.AppDatabase
-import com.base.application.kotlin.viewmodel.FooViewModel
+import com.base.application.kotlin.viewmodel.FooRestViewModel
+import com.base.application.kotlin.viewmodel.FooRoomViewModel
 import com.base.application.kotlin.viewmodel.SharedPreferencesViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -28,6 +30,8 @@ val MainAppModule = module{
     single { get<AppDatabase>().fooDao() }
     // FooRoomRepository instance
     single { FooRoomRepository(get()) }
+    // FooRestRepository instance
+    single {FooRestRepository(get())}
 }
 
 /**
@@ -35,8 +39,9 @@ val MainAppModule = module{
  */
 val ViewModelsModule = module {
     //Provides an instance of ViewModel and binds it to an Android Component lifecycle
-    viewModel { FooViewModel(get()) }
+    viewModel { FooRoomViewModel(get()) }
     viewModel { SharedPreferencesViewModel(get()) }
+    viewModel { FooRestViewModel(get()) }
 }
 
 
