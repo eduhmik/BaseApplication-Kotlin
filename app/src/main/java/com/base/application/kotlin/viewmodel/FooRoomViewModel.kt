@@ -5,14 +5,15 @@ import com.base.application.kotlin.model.data.Foo
 import com.base.application.kotlin.model.repositories.FooRoomRepository
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.MutableLiveData
+import kotlinx.coroutines.*
 
 
 class FooRoomViewModel(var fooRoomRepository: FooRoomRepository)  : ViewModel(){
 
     private val searchId = MutableLiveData<Long>()
-    var searchedFoos = Transformations.switchMap(searchId) { c -> fooRoomRepository.findFooById(c) }
-    var allFoos = fooRoomRepository.getAllFoos()
-    var fooCount = fooRoomRepository.countFoos()
+    var searchedFoos = Transformations.switchMap(searchId) { c -> runBlocking{fooRoomRepository.findFooById(c) }}
+    var allFoos = runBlocking{ fooRoomRepository.getAllFoos()}
+    var fooCount = runBlocking{fooRoomRepository.countFoos()}
 
     fun setSearchId(id : Long){
         searchId.value = id

@@ -75,4 +75,5 @@ dependencies {
 
     //Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0'
+    implementation "androidx.room:room-coroutines:2.1.0-alpha03"
 }

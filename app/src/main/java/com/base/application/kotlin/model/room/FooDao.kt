@@ -11,21 +11,21 @@ import com.base.application.kotlin.model.data.Foo
 @Dao
 interface FooDao {
 
-    @get:Query("SELECT * FROM foos")
-    val foos: LiveData<List<Foo>>
+    @Query("SELECT * FROM foos")
+    suspend fun getFoos(): LiveData<List<Foo>>
 
     @Query("SELECT * FROM foos where id LIKE  :id")
-    fun findById(id: Long): LiveData<List<Foo>>
+    suspend fun findById(id: Long): LiveData<List<Foo>>
 
     @Query("SELECT COUNT(*) FROM foos")
-    fun countFoos(): LiveData<Int>
+    suspend fun countFoos(): LiveData<Int>
 
     @Insert
-    fun insertAll(vararg foos: Foo)
+    suspend fun insertAll(vararg foos: Foo)
 
     @Update
-    fun upDate(vararg foo: Foo)
+    suspend fun upDate(vararg foo: Foo)
 
     @Delete
-    fun delete(foo: Foo)
+    suspend fun delete(foo: Foo)
 }
