@@ -1,7 +1,7 @@
 package com.base.application.kotlin.model.room
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.*
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import com.base.application.kotlin.model.data.Foo
 
 /**
@@ -11,14 +11,16 @@ import com.base.application.kotlin.model.data.Foo
 @Dao
 interface FooDao {
 
+    //TODO:  Using suspend with @query
+
     @Query("SELECT * FROM foos")
-    suspend fun getFoos(): LiveData<List<Foo>>
+    fun getFoos(): LiveData<List<Foo>>
 
     @Query("SELECT * FROM foos where id LIKE  :id")
-    suspend fun findById(id: Long): LiveData<List<Foo>>
+    fun findById(id: Long): LiveData<List<Foo>>
 
     @Query("SELECT COUNT(*) FROM foos")
-    suspend fun countFoos(): LiveData<Int>
+    fun countFoos(): LiveData<Int>
 
     @Insert
     suspend fun insertAll(vararg foos: Foo)

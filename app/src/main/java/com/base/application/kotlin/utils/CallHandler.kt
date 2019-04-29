@@ -1,6 +1,6 @@
 package com.base.application.kotlin.utils
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.*
 import retrofit2.Response
 

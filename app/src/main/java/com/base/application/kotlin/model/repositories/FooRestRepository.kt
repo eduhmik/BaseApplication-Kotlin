@@ -1,6 +1,6 @@
 package com.base.application.kotlin.model.repositories
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.base.application.kotlin.model.data.Foo
 import com.base.application.kotlin.model.data.FooResponse
 import com.base.application.kotlin.model.rest.FooRestApi

@@ -1,6 +1,6 @@
 package com.base.application.kotlin.viewmodel
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.base.application.kotlin.model.repositories.SharedPreferencesRepository
 
 class SharedPreferencesViewModel(private var sharedPreferencesRepository: SharedPreferencesRepository) : ViewModel(){

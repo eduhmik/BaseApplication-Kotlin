@@ -2,7 +2,7 @@ package com.base.application.kotlin.view.splash
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.base.application.kotlin.R
 import com.base.application.kotlin.view.main.MainActivity
 import java.util.*

@@ -1,7 +1,7 @@
 package com.base.application.kotlin.model.room
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import com.base.application.kotlin.model.data.Foo
 
 @Database(entities = [Foo::class], version = 1)

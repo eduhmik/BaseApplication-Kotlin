@@ -1,10 +1,10 @@
 package com.base.application.kotlin.viewmodel
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.base.application.kotlin.model.data.Foo
 import com.base.application.kotlin.model.repositories.FooRoomRepository
-import android.arch.lifecycle.Transformations
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.*
 
 

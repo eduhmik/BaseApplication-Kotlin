@@ -1,6 +1,6 @@
 package com.base.application.kotlin.di
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.content.Context
 import android.content.SharedPreferences
 import com.base.application.kotlin.di.Properties.ROOM_DB_NAME

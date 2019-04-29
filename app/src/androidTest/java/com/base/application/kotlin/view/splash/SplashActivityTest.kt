@@ -1,15 +1,15 @@
 package com.base.application.kotlin.view.splash
 
-import android.support.test.filters.LargeTest
+import androidx.test.filters.LargeTest
 import org.junit.Rule
 import org.junit.Test
-import android.support.test.espresso.intent.Intents
-import android.support.test.espresso.intent.Intents.intended
-import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import org.junit.After
 import org.junit.Before
-import android.support.test.espresso.Espresso
-import android.support.test.rule.ActivityTestRule
+import androidx.test.espresso.Espresso
+import androidx.test.rule.ActivityTestRule
 import com.base.application.kotlin.utils.ElapsedTimeIdlingResource
 import com.base.application.kotlin.view.main.MainActivity
 

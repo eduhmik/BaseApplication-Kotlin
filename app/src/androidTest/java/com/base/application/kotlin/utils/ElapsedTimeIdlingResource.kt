@@ -1,6 +1,6 @@
 package com.base.application.kotlin.utils
 
-import android.support.test.espresso.IdlingResource
+import androidx.test.espresso.IdlingResource
 
 
 class ElapsedTimeIdlingResource(private val waitingTime: Int) : IdlingResource {

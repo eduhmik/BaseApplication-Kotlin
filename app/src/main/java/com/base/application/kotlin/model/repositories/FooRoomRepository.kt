@@ -1,6 +1,6 @@
 package com.base.application.kotlin.model.repositories
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.base.application.kotlin.model.data.Foo
 import com.base.application.kotlin.model.room.FooDao
 import kotlinx.coroutines.*
