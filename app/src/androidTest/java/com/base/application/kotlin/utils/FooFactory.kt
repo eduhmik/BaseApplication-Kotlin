@@ -7,7 +7,7 @@ class FooFactory {
         fun makeCachedFooList(no: Int): ArrayList<Foo> {
             var list = ArrayList<Foo>()
             for (i in 1..no) {
-                list.add(Foo(null, "Title" + 1, "Description" + 1))
+                list.add(Foo((i).toLong(), "Title" + 1, "Description" + 1))
             }
             return list
         }
