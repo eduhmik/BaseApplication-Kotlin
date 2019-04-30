@@ -16,9 +16,9 @@ import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
+import org.mockito.stubbing.Answer
 
 @RunWith(AndroidJUnit4::class)
 class FooRoomRepositoryTest {
@@ -74,42 +74,33 @@ class FooRoomRepositoryTest {
         assert(retrievedCount.value == cachedFoos.size)
     }
 
-    @Test
+    @Test(expected = Exception::class)
     fun insertFoo() {
         //Setup
         val cachedFoos = FooFactory.makeCachedFooList(5)
-        runBlocking{ doNothing().`when`(mockFooDao).insertAll(any())}
+        runBlocking{ doThrow(Exception("")).`when`(mockFooDao).insertAll(any())}
 
         //Run the test
         runBlocking { cachedFoos.forEach { fooRoomRepositoryUnderTest.insertFoo(it) }}
-
-        //Verify the results
-        runBlocking{ verify(mockFooDao, times(cachedFoos.size)).insertAll(any())}
     }
 
-    @Test
+    @Test(expected = Exception::class)
     fun upDateFoo() {
         //Setup
         val updatedFoo = Foo(1, "Updated Title" + 1, "Updated Description" + 1)
-        runBlocking{ doNothing().`when`(mockFooDao).upDate(any())}
+        runBlocking{ doThrow(Exception("")).`when`(mockFooDao).upDate(any())}
 
         //Run the test
         runBlocking { fooRoomRepositoryUnderTest.upDateFoo(updatedFoo) }
-
-        //Verify the results
-        runBlocking{verify(mockFooDao, times(1)).upDate(any())}
     }
 
-    @Test
+    @Test(expected = Exception::class)
     fun deleteFoo() {
         //Setup
         val deletedFoo = FooFactory.makeCachedFooList(5)[0]
-        runBlocking{ doNothing().`when`(mockFooDao).delete(any())}
+        runBlocking{ doThrow(Exception("")).`when`(mockFooDao).delete(any())}
 
         //Run the test
         runBlocking { fooRoomRepositoryUnderTest.deleteFoo(deletedFoo) }
-
-        //Verify the results
-        runBlocking{ verify(mockFooDao, times(1)).delete(any())}
     }
 }
