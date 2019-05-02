@@ -2,6 +2,7 @@ package com.base.application.kotlin.utils
 
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.*
+import retrofit2.HttpException
 import retrofit2.Response
 
 class CallHandler<RESPONSE : Any, DATA: Any> {
@@ -16,7 +17,13 @@ class CallHandler<RESPONSE : Any, DATA: Any> {
                 withContext(Dispatchers.Main) { result.value = Resource.success(response.retrieveData()) }
             }
             catch (e: Exception) {
-                withContext(Dispatchers.Main) { result.value = Resource.error(e.localizedMessage, null) }
+                withContext(Dispatchers.Main) {
+                    if (e is HttpException)
+                        result.value = Resource.error("${e.message} | code ${e.response().code()}", null)
+                    else
+                        result.value = Resource.error("${e.message}", null)
+                }
+                e.printStackTrace()
             }
         }
         return result
