@@ -1,0 +1,80 @@
+# Tutorial here: https://medium.com/@harmittaa/travis-ci-android-example-357f6e632fc4
+
+language: android
+sudo: required
+jdk: oraclejdk8
+
+before_cache:
+ - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+ - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+ directories:
+ - $HOME/.gradle/caches/
+ - $HOME/.gradle/wrapper/
+
+env:
+ global:
+ - ANDROID_API=28
+ - EMULATOR_API_LEVEL=28
+ - ANDROID_BUILD_TOOLS=28.0.3
+ - ADB_INSTALL_TIMEOUT=5 # minutes
+ - secure: "G7M6B4aCGKUQtnppb+1CU4TnIE0M4Kf8jxMWGm/kAH8f48C2oOUD4XeXAaXiDcvg/IZcGgn7DAufm1XvqIgMrB/JIhN4dbMWF06OXRw6yptTGxI4gkwcnyuGDKdamMzY6zHio8yXg6aClvfMOCz7gvqS0uxSNplIU+D70g/Yy3LSjkZA+Dr+FKm47FMBU0IEHGZy6A2D2jWyc69I2LZEKgFjlda8JmWbSxf8ITwuJ1HFU9UtizcuDjPZCQ5z8o9t9Q08Wy49O6ahGIhYOncI4OOiG8/EVfw4PkEK1Uex5mBpstLNmDMg09gkybk9fri/gxyKYoNgqIfb0KYriSEhmB61835AoczTFMXMkaAQIx1ao8Y6Dqu3EtNy7PbqC+i4hh/g6BP0XrV/Qiqf6m3e59i9qJNOJae22BMweOFg7Cgm/S9gmhRg6mQbON2f1V7K7vhy6WyJr6VPUZQpk5d/Rcli/nruo34d6RC/ojxoq/e4NU/DJTiJ/Ou/YUS0IN1qs7Qmxo1GTBNZg/PVrCxExfkz/EKL7rya8APfxmj95fWkyD+dtbJxxmXq0QAg2WtchvR04iFe2KlvhyCP+Ga39GhcyhIs72ptlnKIaY3soxe8xGJ+WfgDDBGpVwvnx5efdDIwZtNvZ1t0gTrniYNBXuHiWBx3muR2kvpyQ1bXiSg="
+ - secure: "fLBiV0eO4noWee40g75+tM3QXGCG680X7uUPiJbSfM4zKF7B4VCcymt1BdANgHCdtgdFD6CClbNqg/5nia5+MK/BEP+qsAiIeYFlUnm6tIdN8V4jM5NxnKszFVedPk/cCoPlplHL1qIh97WKM29sBTy0zW+m0EiLmbLhVF8AdAL0vUHeJ6EY1wJ2//HcX0NKgJMEzT/WQfz9j9mTYBVjCXdMhmiMztM/kg1eW+5sLlodwgLglJ1dhZQ1jBO/BdMcrKe75/0zyYzO9CbbNUnv1dieh5zauluGXzK37PQBKD939wDMBCGNnucdY1B7Ki+FV/i/+I9HDHfyFzKzKQ7BSabot+CrhVm3dVpDBvzfRMZ1WdLCq1lFwIP94xnr/jbyYNykKawBAX+kFogkZH7+mBQYy60yZHDrldmGRBft7ooPKOMYD7m0zYnAshDlMr6moXw4txBYABLlM0XK0DAKDGHy2S3nCkPIHMi9G1ww6/0UNzggWrfFPRvO8ir+R2htV2fTFS58Ar1676L2FL0gESGk5PcgFsmqeBpWMakklimEj3JT+WM/759vUqwoEssBgMbEKMHmEO8nbS3xaKRgTd2f19MB1kcVUr6xI+JagRDWmhLixIict8TMYHDMv91nQC65HB+wks/2h14wHrDfygKheUAHkFecUyul7emqyX0="
+
+android:
+ components:
+ - tools
+ - platform-tools
+ - build-tools-$ANDROID_BUILD_TOOLS
+ - android-$ANDROID_API
+ - android-$EMULATOR_API_LEVEL
+ - extra-google-m2repository
+ - extra-android-m2repository # for design library
+ - addon-google_apis-google-19 # google play services
+ - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
+ - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API_LEVEL
+
+ licenses:
+ - android-sdk-preview-license-.+
+ - android-sdk-license-.+
+ - google-gdk-license-.+
+
+before_install:
+- openssl aes-256-cbc -K $encrypted_1133d2baa014_key -iv $encrypted_1133d2baa014_iv -in BaseAppKotlin.jks.enc -out BaseAppKotlin.jks -d
+- mkdir "$ANDROID_HOME/licenses" || true
+- echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+- echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+- chmod +x gradlew
+- ./gradlew dependencies || true # DON'T ADD unless you are getting "Install missing components using SDK manager"
+#Source: https://medium.com/@oldergod/constraint-layout-and-circleci-travis-d50342696d2
+
+before_script:
+- echo no | android create avd --force -n test -t android-28 --abi armeabi-v7a
+- emulator -avd test -no-skin -no-audio -no-window &
+- android-wait-for-emulator
+- adb shell input keyevent 82 &
+
+script:
+- "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
+
+before_deploy:
+- cp $TRAVIS_BUILD_DIR/example_keystore.jks $HOME
+- cd app/build/outputs/apk/
+- jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/BaseAppKotlin.jks -storepass $storepass -keypass $keypass app-release-unsigned.apk bak
+
+# Verification
+- jarsigner -verify app-release-unsigned.apk
+- "${ANDROID_HOME}/build-tools/28.0.3/zipalign -v 4 app-release-unsigned.apk BaseApplicationKotlin.apk"
+
+deploy:
+  provider: releases
+  file: BaseAppKotlin.apk
+  skip_cleanup: true
+
+  on:
+    repo: Nyariki/BaseApplication-Kotlin
+    tags: true
+    jdk: oraclejdk8
+  api_key:
+    secure: "hqMPo6hrokT67EBRq4/kIQLYDG74Uo5jtM4uJfCfwb9FgP5k5Mf/oZb9QuQFzoU8i1Gbmr2Bg4PoQ2Y9tB9PONnE0NvX01rHIPeK71CDJbBc56yitlQyS6w08GduZzjpinuYU4r5JduF0kLdDbu0dMilbb8BgAfyHmr/DzQSu5iA4/OHT6qShOSCqvIrk0PLsl0OLGatvDggTbLm9UJGLwKZzDBlXKr3Hai04e3mN6SZ9o3ZiLNiqqVZVdDAOxxdwzdr1IIgaJKAXg1n9HEJNuGnoTmx+QcEr1aG+6TS3m3aYaHlWoyyTLihIO/xeeSNYaQHwwh4EnGLFDd89movrkaipoERGCe8Cmg3A5kKajiw7B3cuHNvaznnFv4ryxM7lmZouhVq3PE9hVeJJJq7C5zisva5MCaGt2fGHcLaBWPVOHuoaDKsF8daHImKZwcESZCkeUsQD1DOwN9RaWEaZVQxuzti6lf0H8WzMKjP9J16b+W0GIUYYMAcjjvvUJVy4BIehH935VICGDgyvmvYiSTtd4tPcRA2vT6nVD3pY68Pfe3vaAMovgqmk9VxIEdOeSp5oM5zfogNSfo7aTmL3BaTi8b7Y0LL1sZTfkvftS1mzzpBpyUxGFoMiiUiV+xm0EVMjwnnLn0CIVgZYrlEY6b69k4A+SFIsUVKoMHd7T4="
